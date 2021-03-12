@@ -101,13 +101,13 @@ class UniversityDetail(generics.GenericAPIView,
 
     def delete(self, request, *args, **kwargs):
 
-       #user = request.user
-       #user_group = user.groups.first()
-       #staff = Group.objects.get(name='Staffs')
-       #staffschool=Group.objects.get(name='SchoolStaffs')
-       #if user_group==staff or user_group== staffschool or user.is_active:
-       return self.destroy(request, *args, **kwargs)
-       #return Response({"detail": "You are not allowed to perform such operation except  system administrator "}, status=403)
+       user = request.user
+       user_group = user.groups.first()
+       staff = Group.objects.get(name='Staffs')
+       staffschool=Group.objects.get(name='SchoolStaffs')
+       if user_group==staff or user_group== staffschool or user.is_active:
+         return self.destroy(request, *args, **kwargs)
+       return Response({"detail": "You are not allowed to perform such operation except  system administrator "}, status=403)
 
 
 #program list
@@ -218,7 +218,7 @@ class DepartmentDetail(generics.GenericAPIView,
         staff = Group.objects.get(name='Staffs')
         staffschool=Group.objects.get(name='SchoolStaffs')
         if user_group == staff  or user_group== staffschool:
-            return self.partial_update(request, *args, **kwargs)
+          return self.partial_update(request, *args, **kwargs)
         return Response({"detail": "You are not allowed to perform such operation except   staff form university and system administrator   "}, status=403)
 
 
